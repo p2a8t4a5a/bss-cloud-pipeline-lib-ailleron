@@ -1,0 +1,4 @@
+[submodule "jenkins-pipeline-power-stage"]
+	path = jenkins-pipeline-power-stage
+	url = git@pbatman1.p4.int:root/jenkins-pipeline-power-stage.git
+	branch = devel

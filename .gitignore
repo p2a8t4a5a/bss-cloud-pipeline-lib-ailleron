@@ -1,0 +1,14 @@
+.gradle
+build/
+
+.idea/
+*.iml
+out/
+classes/
+
+.poject
+.settings
+.classpath
+
+*.swp
+casc.envs

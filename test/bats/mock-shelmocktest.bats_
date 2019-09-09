@@ -1,0 +1,41 @@
+#!/usr/bin/env bats
+
+load helpers
+
+setup() {
+    teardown
+    merge_configs
+    . $LIBRARY_SCRIPTS/common.sh   
+    #export PATH=$BATS_TEST_DIRNAME/bin:$PATH
+     . shellmock
+    shellmock_clean
+}
+
+teardown() {
+    cleanup_configs
+    if [ -z "$TEST_FUNCTION" ]; then
+        . shellmock
+        shellmock_clean
+    fi
+}
+
+
+@test "Mock deployment of jenkins with custom project name" {
+    # shellmock_expect oc --type partial --match "" --output "# general catch"
+    # shellmock_expect oc --type partial --match "get namespace foobar-custom-cicd -ogo-template" --output "type:preview"
+    shellmock_expect oc --type partial --match "get namespace foobar-custom-cicd" --output "type:preview"
+    run /tmp/test.sh 
+    echo "$output" >&3
+    # echo "$output" 
+    # shellmock_verify
+    # echo "${capture[@]}" >&3
+    
+    # export DEBUG=1
+    # run $LIBRARY_SCRIPTS/deploy-jenkins.sh foobar foobar-custom
+
+    # shellmock_verify
+    # echo "${capture[@]}" >&3
+
+    echo "$output" >&3
+    [ "$status" -eq 0 ]
+}

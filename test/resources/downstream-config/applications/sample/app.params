@@ -1,0 +1,4 @@
+IMAGE_STREAM_NAME="sample-springboot"
+IMAGE_STREAM_TAG="latest"
+HEALTHCHECK_PATH="/"
+FOO="sysbar"

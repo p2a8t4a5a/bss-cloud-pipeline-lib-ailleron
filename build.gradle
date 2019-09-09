@@ -1,0 +1,57 @@
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.jenkins-ci.org/public/'
+    }
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.16'
+
+    testCompile 'com.lesfurets:jenkins-pipeline-unit:1.1'
+    testCompile 'org.spockframework:spock-core:1.2-groovy-2.4'
+    testCompile 'info.solidsoft.spock:spock-global-unroll:0.5.1'
+    testCompile 'net.bytebuddy:byte-buddy:1.9.6'
+    testCompile 'org.objenesis:objenesis:1.2'
+    testCompile 'org.assertj:assertj-core:3.11.1'
+
+    testCompile "javax.servlet:servlet-api:2.5"
+
+    compile "org.jenkins-ci.main:jenkins-core:2.150.1"  //there are references to Result
+    compile ('org.jenkins-ci.plugins.workflow:workflow-step-api:2.12') {  force = true; artifact {name='workflow-step-api';type='jar'}; artifact {name='workflow-step-api';type='hpi' } }
+    compile ('org.jenkins-ci.plugins:pipeline-input-step:2.8') {  force = true; artifact {name='pipeline-input-step';type='jar'}; artifact {name='pipeline-input-step';type='hpi' } }
+
+    testCompile ('com.openshift.jenkins.plugins:openshift-client:1.0.23') {  force = true; artifact {name='openshift-client';type='jar'}; artifact {name='openshift-client';type='hpi' } }
+    testCompile ('org.jenkins-ci.plugins.workflow:workflow-cps:2.37') {  force = true; artifact {name='workflow-cps';type='jar'}; artifact {name='workflow-cps';type='hpi' } }
+    testCompile ('org.jenkins-ci.plugins.workflow:workflow-step-api:2.12') {  force = true; artifact {name='workflow-step-api';type='jar'}; artifact {name='workflow-step-api';type='hpi' } }
+    testCompile ('org.jenkins-ci.plugins.workflow:workflow-basic-steps:2.6') {  force = true; artifact {name='workflow-basic-steps';type='jar'}; artifact {name='workflow-basic-steps';type='hpi' } }
+    testCompile ('org.jenkins-ci.plugins.workflow:workflow-api:2.19') {  force = true; artifact {name='workflow-api';type='jar'}; artifact {name='workflow-api';type='hpi' } }
+    testCompile ('org.jenkins-ci.plugins.workflow:workflow-scm-step:2.6') {  force = true; artifact {name='workflow-scm-step';type='jar'}; artifact {name='workflow-scm-step';type='hpi' } }
+    testCompile ('org.jenkins-ci.plugins.workflow:workflow-support:2.14') {  force = true; artifact {name='workflow-support';type='jar'}; artifact {name='workflow-support';type='hpi' } }
+    testCompile ('org.jenkins-ci.plugins:credentials:2.1.14') {  force = true; artifact {name='credentials';type='jar'}; artifact {name='credentials';type='hpi' } }
+    testCompile ('org.jenkins-ci.plugins:artifactory:2.16.2') {  force = true; artifact {name='artifactory';type='jar'}; artifact {name='artifactory';type='hpi' } }
+    testCompile ('org.jenkins-ci.main:maven-plugin:3.2') {  force = true; artifact {name='maven-plugin';type='jar'}; artifact {name='maven-plugin';type='hpi' } }
+}
+
+sourceSets {
+    main {
+        groovy.srcDir file('src')
+        resources.srcDir file('resources')
+    }
+    test {
+        groovy.srcDir file('pipelineTests/groovy')
+    }
+}
+
+task copyLib(type: Copy) {
+    from '.'
+    into 'build/libs/p4-pipeline-library@master'
+    include 'src/**'
+    include 'vars/**'
+}
+
+tasks.withType(Test) {
+    dependsOn tasks.copyLib
+}

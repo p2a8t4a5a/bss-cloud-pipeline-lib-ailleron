@@ -1,0 +1,11 @@
+http_proxy=
+https_proxy=
+HTTP_PROXY=
+HTTPS_PROXY=
+no_proxy=100.100.0.0/16,100.100.*,10.0.0.0/8,10.*,172.16.0.0/20,172.1*,172.2*,*.cluster.local,*.default
+NO_PROXY=100.100.0.0/16,100.100.*,10.0.0.0/8,10.*,172.16.0.0/20,172.1*,172.2*,*.cluster.local,*.default
+
+# required for jenkins updates
+OVERRIDE_PV_PLUGINS_WITH_IMAGE_PLUGINS=true
+OVERRIDE_PV_CONFIG_WITH_IMAGE_CONFIG=true
+

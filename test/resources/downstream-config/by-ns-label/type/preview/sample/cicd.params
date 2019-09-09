@@ -1,0 +1,4 @@
+SYS_NAME="foobar"
+APP_NAME="sample-springboot"
+APP_CODE_REPO_NAME="cholewt/sample-springboot-app.git"
+APP_CONFIG_REPO_NAME="root/foobar-config-system.git"

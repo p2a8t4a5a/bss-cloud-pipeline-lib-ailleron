@@ -1,0 +1,7 @@
+JENKINS_TYPE="persistent"
+JENKINS_IMAGE_STREAM_TAG="p4-jenkins:stable"
+VOLUME_CAPACITY="15Gi"
+MEMORY_LIMIT="1Gi"
+
+# disable installation of plugins on startup - use dedicated custom jenkins build
+INSTALL_PLUGINS=

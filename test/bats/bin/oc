@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# generate filename with potential output
+MOCKFILE=$(echo "$*"|sed -e 's/ //g' -e 's|[\$\'\"/]|_|g')
+
+MOCKARGS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/oc-args.d"
+
+if [ -f "$MOCKARGS_DIR/$MOCKFILE" ];then
+    cat $MOCKARGS_DIR/$MOCKFILE
+else
+
+cat << EOF
+## oc mockup
+## 
+## $MOCKARGS_DIR/$MOCKFILE not found - create it with mock content
+##
+## got the following arguments and options:
+## "$*"
+##
+EOF
+
+fi
